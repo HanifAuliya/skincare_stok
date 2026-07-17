@@ -6,24 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet" />
     <style>
       :root {
-        --ink: #33222a;
-        --cream: #fbf1ee;
-        --panel: #ffffff;
-        --sage: #c24e72;
-        --sage-deep: #7a2e4c;
-        --sage-light: #f7e3ea;
-        --amber: #c6924f;
-        --amber-light: #f6e8d2;
-        --rose: #a73257;
-        --rose-light: #fbe1e6;
-        --line: #eedcde;
-        --muted: #93727b;
-        --shadow-sm: 0 1px 2px rgba(122, 46, 76, 0.05);
-        --shadow-md: 0 10px 30px -14px rgba(122, 46, 76, 0.28);
+        /* ---- Botanika Lab palette — apothecary / botanical skincare ---- */
+        --ink: #26332c;
+        --cream: #f6f1e6;
+        --panel: #fffdf8;
+        --panel-soft: #fbf6ea;
+        --sage: #6b8a6e;
+        --sage-deep: #3c5642;
+        --sage-light: #e7eee0;
+        --gold: #b6874c;
+        --gold-deep: #8f6a38;
+        --gold-light: #f5e9d3;
+        --terracotta: #bd6a4a;
+        --terracotta-light: #f6e3d7;
+        --line: #e7ddc7;
+        --muted: #7c8577;
+        --shadow-sm: 0 1px 2px rgba(38, 51, 44, 0.06);
+        --shadow-md: 0 14px 34px -18px rgba(38, 51, 44, 0.32);
       }
       * {
         box-sizing: border-box;
@@ -33,10 +36,11 @@
         font-family: "Inter", sans-serif;
         background:
           radial-gradient(
-            1200px 500px at 100% -10%,
-            #fbe6ea 0%,
-            transparent 60%
+            1100px 480px at 100% -8%,
+            #eef0e3 0%,
+            transparent 62%
           ),
+          radial-gradient(900px 420px at -6% 110%, #f3e9d4 0%, transparent 55%),
           var(--cream);
         color: var(--ink);
       }
@@ -57,9 +61,9 @@
 
       /* Sidebar */
       .sidebar {
-        width: 238px;
-        background: linear-gradient(180deg, var(--sage-deep), #5c2038);
-        color: #fbedef;
+        width: 240px;
+        background: linear-gradient(190deg, var(--sage-deep) 0%, #263a2d 100%);
+        color: #ecf1e6;
         padding: 30px 20px;
         display: flex;
         flex-direction: column;
@@ -69,12 +73,12 @@
       .brand-row {
         display: flex;
         align-items: center;
-        gap: 9px;
+        gap: 10px;
         margin-bottom: 2px;
       }
       .brand-mark {
-        width: 26px;
-        height: 26px;
+        width: 27px;
+        height: 27px;
         flex-shrink: 0;
       }
       .brand {
@@ -86,10 +90,10 @@
       }
       .brand-sub {
         font-size: 10.5px;
-        letter-spacing: 0.14em;
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        color: #e7afc0;
-        margin: 2px 0 38px 35px;
+        color: #b9cdb0;
+        margin: 3px 0 38px 37px;
       }
       .nav-item {
         display: flex;
@@ -98,7 +102,7 @@
         padding: 10px 13px;
         border-radius: 9px;
         font-size: 13.5px;
-        color: #efc9d4;
+        color: #d7e2ce;
         cursor: pointer;
         margin-bottom: 3px;
         transition: 0.15s;
@@ -113,15 +117,15 @@
         background: rgba(255, 255, 255, 0.07);
       }
       .nav-item.active {
-        background: rgba(255, 255, 255, 0.13);
+        background: rgba(255, 255, 255, 0.1);
         color: #fff;
         font-weight: 600;
-        border-left: 3px solid #f3b6c6;
+        border-left: 3px solid var(--gold);
       }
       .sidebar-foot {
         margin-top: auto;
         font-size: 11px;
-        color: #d592a4;
+        color: #9db494;
         line-height: 1.6;
         padding-top: 20px;
         border-top: 1px solid rgba(255, 255, 255, 0.14);
@@ -143,11 +147,11 @@
       }
       .eyebrow {
         font-size: 11px;
-        letter-spacing: 0.12em;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
-        color: var(--rose);
+        color: var(--gold-deep);
         font-weight: 600;
-        margin-bottom: 6px;
+        margin-bottom: 7px;
       }
       .topbar h1 {
         font-size: 30px;
@@ -162,6 +166,7 @@
       .top-actions {
         display: flex;
         gap: 10px;
+        align-items: center;
       }
       .search-box {
         position: relative;
@@ -175,6 +180,11 @@
         width: 220px;
         font-family: "Inter";
         box-shadow: var(--shadow-sm);
+        color: var(--ink);
+      }
+      .search-box input:focus {
+        outline: 2px solid var(--sage);
+        outline-offset: 1px;
       }
       .search-box svg {
         position: absolute;
@@ -195,14 +205,15 @@
         align-items: center;
         gap: 6px;
         transition: 0.15s;
+        white-space: nowrap;
       }
       .btn-primary {
-        background: var(--sage);
+        background: var(--sage-deep);
         color: #fff;
-        box-shadow: 0 6px 16px -6px rgba(162, 50, 87, 0.55);
+        box-shadow: 0 8px 18px -8px rgba(60, 86, 66, 0.55);
       }
       .btn-primary:hover {
-        background: var(--sage-deep);
+        background: #2e4433;
         transform: translateY(-1px);
       }
       .btn-ghost {
@@ -228,11 +239,11 @@
         border-radius: 14px;
         padding: 19px 20px;
         box-shadow: var(--shadow-sm);
-        border-left: 3px solid var(--sage);
+        border-left: 3px solid var(--gold);
         position: relative;
       }
       .stat-card.alert {
-        border-left-color: var(--rose);
+        border-left-color: var(--terracotta);
       }
       .stat-label {
         font-size: 11px;
@@ -252,7 +263,7 @@
         margin-top: 5px;
       }
       .stat-card.alert .stat-value {
-        color: var(--rose);
+        color: var(--terracotta);
       }
 
       /* Filters */
@@ -276,9 +287,9 @@
         border-color: var(--sage);
       }
       .chip.active {
-        background: var(--sage);
+        background: var(--sage-deep);
         color: #fff;
-        border-color: var(--sage);
+        border-color: var(--sage-deep);
       }
 
       /* Table */
@@ -302,7 +313,7 @@
         padding: 15px 18px;
         border-bottom: 1px solid var(--line);
         font-weight: 700;
-        background: #fcf7f5;
+        background: var(--panel-soft);
       }
       tbody td {
         padding: 14px 18px;
@@ -317,7 +328,7 @@
         transition: 0.12s;
       }
       tbody tr:hover {
-        background: #fdf7f8;
+        background: var(--panel-soft);
       }
       .prod-name {
         font-weight: 600;
@@ -343,44 +354,55 @@
         align-items: center;
       }
 
-      /* Stock tube visual — signature element, styled like a squeeze tube */
+      /* Stock visual — signature element: apothecary dropper bottle */
       .stock-cell {
         display: flex;
         align-items: center;
         gap: 11px;
       }
-      .tube {
-        width: 20px;
-        height: 36px;
+      .bottle {
+        width: 22px;
+        height: 38px;
         position: relative;
         flex-shrink: 0;
       }
-      .tube-cap {
+      .bottle-dropper {
         position: absolute;
-        top: -3px;
-        left: 5px;
-        width: 10px;
-        height: 6px;
-        background: #d9c7ca;
+        top: -5px;
+        left: 8px;
+        width: 6px;
+        height: 7px;
+        background: #cfc2a3;
         border-radius: 2px 2px 0 0;
       }
-      .tube-body {
+      .bottle-neck {
         position: absolute;
-        top: 3px;
+        top: 2px;
+        left: 7px;
+        width: 8px;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.55);
+        border: 1.3px solid var(--line);
+        border-bottom: none;
+      }
+      .bottle-body {
+        position: absolute;
+        top: 7px;
         left: 0;
         right: 0;
         bottom: 0;
-        border-radius: 5px 5px 9px 9px;
+        border-radius: 7px 7px 10px 10px;
         border: 1.5px solid var(--line);
-        background: #fff;
+        background: rgba(255, 255, 255, 0.6);
         overflow: hidden;
       }
-      .tube-fill {
+      .bottle-fill {
         position: absolute;
         bottom: 0;
         left: 0;
         right: 0;
         transition: height 0.3s;
+        opacity: 0.82;
       }
       .stock-num {
         font-variant-numeric: tabular-nums;
@@ -400,6 +422,7 @@
         font-family: "IBM Plex Mono", monospace;
         font-size: 13px;
         width: 112px;
+        color: var(--ink);
       }
       .price-input:focus {
         outline: 2px solid var(--sage);
@@ -413,18 +436,19 @@
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.03em;
+        white-space: nowrap;
       }
       .badge-ok {
         background: var(--sage-light);
         color: var(--sage-deep);
       }
       .badge-low {
-        background: var(--amber-light);
-        color: #8a5a20;
+        background: var(--gold-light);
+        color: var(--gold-deep);
       }
       .badge-out {
-        background: var(--rose-light);
-        color: #8a2a47;
+        background: var(--terracotta-light);
+        color: #8a3d24;
       }
 
       .row-actions {
@@ -442,26 +466,28 @@
         justify-content: center;
         cursor: pointer;
         transition: 0.12s;
+        flex-shrink: 0;
       }
       .icon-btn:hover {
         background: var(--sage-light);
         border-color: var(--sage);
       }
       .icon-btn.danger:hover {
-        background: var(--rose-light);
-        border-color: var(--rose);
+        background: var(--terracotta-light);
+        border-color: var(--terracotta);
       }
 
       /* Modal */
       .overlay {
         position: fixed;
         inset: 0;
-        background: rgba(51, 34, 42, 0.5);
+        background: rgba(38, 51, 44, 0.45);
         display: none;
         align-items: center;
         justify-content: center;
         z-index: 120;
         backdrop-filter: blur(1px);
+        padding: 20px;
       }
       .overlay.show {
         display: flex;
@@ -471,9 +497,11 @@
         border-radius: 18px;
         padding: 28px;
         width: 420px;
-        max-width: 90vw;
+        max-width: 100%;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
         border: 1px solid var(--line);
-        box-shadow: 0 30px 60px -20px rgba(51, 34, 42, 0.35);
+        box-shadow: 0 30px 60px -20px rgba(38, 51, 44, 0.4);
       }
       .modal h2 {
         margin: 0 0 18px;
@@ -498,6 +526,7 @@
         font-size: 13.5px;
         font-family: "Inter";
         background: #fff;
+        color: var(--ink);
       }
       .field input:focus,
       .field select:focus {
@@ -527,7 +556,7 @@
       }
       .viewfinder {
         position: relative;
-        background: #2c1620;
+        background: #223028;
         border-radius: 14px;
         height: 190px;
         overflow: hidden;
@@ -540,46 +569,45 @@
         content: "";
         position: absolute;
         inset: 14px;
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.28);
         border-radius: 8px;
       }
       .viewfinder .corner {
         position: absolute;
         width: 22px;
         height: 22px;
-        border-color: var(--sage);
       }
       .c-tl {
         top: 10px;
         left: 10px;
-        border-top: 3px solid #f0a6bb;
-        border-left: 3px solid #f0a6bb;
+        border-top: 3px solid var(--gold);
+        border-left: 3px solid var(--gold);
       }
       .c-tr {
         top: 10px;
         right: 10px;
-        border-top: 3px solid #f0a6bb;
-        border-right: 3px solid #f0a6bb;
+        border-top: 3px solid var(--gold);
+        border-right: 3px solid var(--gold);
       }
       .c-bl {
         bottom: 10px;
         left: 10px;
-        border-bottom: 3px solid #f0a6bb;
-        border-left: 3px solid #f0a6bb;
+        border-bottom: 3px solid var(--gold);
+        border-left: 3px solid var(--gold);
       }
       .c-br {
         bottom: 10px;
         right: 10px;
-        border-bottom: 3px solid #f0a6bb;
-        border-right: 3px solid #f0a6bb;
+        border-bottom: 3px solid var(--gold);
+        border-right: 3px solid var(--gold);
       }
       .scan-line {
         position: absolute;
         left: 14px;
         right: 14px;
         height: 2px;
-        background: #f0a6bb;
-        box-shadow: 0 0 10px #f0a6bb;
+        background: var(--gold);
+        box-shadow: 0 0 10px var(--gold);
         animation: scanmove 1.8s ease-in-out infinite;
       }
       @keyframes scanmove {
@@ -594,7 +622,7 @@
         }
       }
       .scan-hint {
-        color: #f3d3dc;
+        color: #d8e2cf;
         font-size: 11.5px;
         position: absolute;
         bottom: 20px;
@@ -611,7 +639,7 @@
         background: var(--sage-light);
       }
       .scan-result.not-found {
-        background: var(--rose-light);
+        background: var(--terracotta-light);
       }
       .scan-result .prod-name {
         font-size: 14px;
@@ -623,8 +651,8 @@
         margin-top: 10px;
       }
       .qty-btn {
-        width: 30px;
-        height: 30px;
+        width: 32px;
+        height: 32px;
         border-radius: 8px;
         border: 1px solid var(--line);
         background: #fff;
@@ -640,15 +668,11 @@
           display: none;
         }
         .main {
-          padding: 20px 18px 100px;
+          padding: 20px 16px 96px;
         }
         .stats {
           grid-template-columns: repeat(2, 1fr);
         }
-      }
-
-      .sidebar-backdrop {
-        display: none;
       }
 
       /* Bottom navigation — mobile app style */
@@ -661,8 +685,8 @@
         z-index: 80;
         background: var(--panel);
         border-top: 1px solid var(--line);
-        box-shadow: 0 -10px 30px -12px rgba(51, 34, 42, 0.22);
-        padding: 9px 6px calc(9px + env(safe-area-inset-bottom));
+        box-shadow: 0 -10px 30px -12px rgba(38, 51, 44, 0.2);
+        padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
       }
       .bottom-nav-inner {
         display: flex;
@@ -688,22 +712,22 @@
         line-height: 1;
       }
       .bnav-item.active {
-        color: var(--sage);
+        color: var(--sage-deep);
       }
       .bnav-scan {
-        margin-top: -24px;
+        margin-top: -22px;
       }
       .bnav-scan .bnav-ico {
-        width: 48px;
-        height: 48px;
+        width: 46px;
+        height: 46px;
         border-radius: 50%;
         background: linear-gradient(160deg, var(--sage), var(--sage-deep));
         color: #fff;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 20px;
-        box-shadow: 0 10px 22px -6px rgba(167, 50, 87, 0.55);
+        font-size: 19px;
+        box-shadow: 0 10px 22px -6px rgba(60, 86, 66, 0.5);
         border: 3px solid var(--cream);
       }
       .bnav-scan {
@@ -716,39 +740,68 @@
         }
       }
 
-      @media (max-width: 600px) {
+      /* ---- Mobile topbar: compact, icon-first action row ---- */
+      @media (max-width: 640px) {
         .topbar {
-          margin-bottom: 22px;
+          margin-bottom: 20px;
+          gap: 14px;
+        }
+        .topbar h1 {
+          font-size: 24px;
         }
         .top-actions {
           width: 100%;
-          flex-direction: column;
+          flex-wrap: wrap;
         }
         .search-box {
+          flex: 1 1 100%;
+          order: 1;
           width: 100%;
         }
         .search-box input {
           width: 100%;
         }
-        .btn {
-          width: 100%;
+        #addProdBtn {
+          order: 2;
+          flex: 1;
           justify-content: center;
         }
+        .top-actions > .btn-ghost {
+          order: 3;
+          flex: 0 0 auto;
+          padding: 10px 14px;
+        }
+        .top-actions > .btn-ghost span.label-full {
+          display: none;
+        }
         .top-actions .icon-btn {
-          align-self: center;
-          width: 44px;
-          height: 44px;
-          font-size: 16px;
+          order: 4;
+          width: 42px;
+          height: 42px;
+          font-size: 15px;
+          flex: 0 0 auto;
         }
         .stats {
           grid-template-columns: 1fr 1fr;
-          gap: 12px;
+          gap: 10px;
+        }
+        .stat-card {
+          padding: 15px 14px;
+          border-radius: 12px;
         }
         .stat-value {
-          font-size: 22px;
+          font-size: 20px;
+        }
+        .stat-label {
+          font-size: 10px;
+          margin-bottom: 8px;
         }
         .stok-layout {
           grid-template-columns: 1fr;
+        }
+        .modal {
+          padding: 22px;
+          border-radius: 16px;
         }
       }
 
@@ -777,7 +830,7 @@
         }
         .table-wrap td {
           border: none;
-          padding: 9px 16px;
+          padding: 10px 16px;
           display: flex;
           justify-content: space-between;
           align-items: center;
@@ -841,6 +894,7 @@
         padding: 13px 20px;
         border-bottom: 1px solid var(--line);
         font-size: 13.5px;
+        gap: 10px;
       }
       .log-item:last-child {
         border-bottom: none;
@@ -880,6 +934,15 @@
         color: var(--muted);
         margin-bottom: 14px;
       }
+
+      @media (max-width: 420px) {
+        .log-item {
+          flex-wrap: wrap;
+        }
+        .btn span.label-full {
+          display: inline;
+        }
+      }
     </style>
   </head>
   <body>
@@ -889,7 +952,7 @@
           <svg class="brand-mark" viewBox="0 0 24 24" fill="none">
             <path
               d="M12 2C12 2 6 10.5 6 15a6 6 0 0 0 12 0c0-4.5-6-13-6-13Z"
-              fill="#F3B6C6"
+              fill="#C9A96A"
               opacity="0.9" />
             <path
               d="M12 6.5c0 0-3.2 5.3-3.2 8.2a3.2 3.2 0 0 0 6.4 0c0-2.9-3.2-8.2-3.2-8.2Z"
@@ -959,7 +1022,8 @@
               <input id="searchInput" placeholder="Cari produk atau SKU..." />
             </div>
             <button class="btn btn-ghost" onclick="openScanModal()">
-              📷 Scan Barcode
+              📷
+              <span class="label-full">Scan Barcode</span>
             </button>
             <button
               class="btn btn-primary"
@@ -1185,12 +1249,12 @@
 
     <script>
       const catColors = {
-        Cleanser: "#C9A87C", // busa pembersih — krem kecoklatan
-        Toner: "#E3B6C4", // air toner — pink bening lembut
-        Serum: "#C68A3D", // serum dropper — amber keemasan
-        Moisturizer: "#E4C6A6", // krim pelembap — krem gading
-        Sunscreen: "#DCC15A", // sunscreen — putih kekuningan
-        "Sheet Mask": "#DD7E9B", // essence masker — pink segar
+        Cleanser: "#8a9a72", // busa pembersih — hijau sage lembut
+        Toner: "#b6874c", // air toner — amber keemasan pucat
+        Serum: "#6b8a6e", // serum dropper — sage dalam
+        Moisturizer: "#c9a96a", // krim pelembap — gading keemasan
+        Sunscreen: "#d3b56a", // sunscreen — kuning gading hangat
+        "Sheet Mask": "#bd6a4a", // essence masker — terracotta lembut
       };
 
       let products = [
@@ -1330,7 +1394,6 @@
         document.getElementById("dateLabel").textContent =
           view === "dashboard" ? meta.sub + " — " + todayStr : meta.sub;
 
-        const showTopExtras = view === "produk" || view === "dashboard";
         document.getElementById("searchBoxWrap").style.display =
           view === "produk" ? "block" : "none";
         document.getElementById("addProdBtn").style.display =
@@ -1402,7 +1465,7 @@
         <td data-label="Kategori"><span class="cat-cell"><span class="swatch" style="background:${color}"></span>${p.cat}</span></td>
         <td data-label="Stok">
           <div class="stock-cell">
-            <div class="tube"><div class="tube-cap"></div><div class="tube-body"><div class="tube-fill" style="height:${pct}%;background:${color}"></div></div></div>
+            <div class="bottle"><div class="bottle-dropper"></div><div class="bottle-neck"></div><div class="bottle-body"><div class="bottle-fill" style="height:${pct}%;background:${color}"></div></div></div>
             <div><span class="stock-num">${p.stock}</span> <span class="stock-unit">unit</span></div>
           </div>
         </td>
