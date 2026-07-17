@@ -10,37 +10,42 @@
       rel="stylesheet" />
     <style>
       :root {
-        /* ---- Botanika Lab palette — apothecary / botanical skincare ---- */
-        --ink: #26332c;
-        --cream: #f6f1e6;
-        --panel: #fffdf8;
-        --panel-soft: #fbf6ea;
-        --sage: #6b8a6e;
-        --sage-deep: #3c5642;
-        --sage-light: #e7eee0;
-        --gold: #b6874c;
-        --gold-deep: #8f6a38;
-        --gold-light: #f5e9d3;
-        --terracotta: #bd6a4a;
-        --terracotta-light: #f6e3d7;
-        --line: #e7ddc7;
-        --muted: #7c8577;
-        --shadow-sm: 0 1px 2px rgba(38, 51, 44, 0.06);
-        --shadow-md: 0 14px 34px -18px rgba(38, 51, 44, 0.32);
+        /* ---- Botanika Lab palette — lipstick pink & rose-gold ---- */
+        --ink: #3a1526;
+        --cream: #fdf2f3;
+        --panel: #fffbfb;
+        --panel-soft: #fdf5f6;
+        --sage: #d64d78;
+        --sage-deep: #9c2c53;
+        --sage-light: #fbe1e9;
+        --gold: #c39a5c;
+        --gold-deep: #96742f;
+        --gold-light: #f6ecd8;
+        --terracotta: #b23a4e;
+        --terracotta-light: #f8dee1;
+        --line: #f3dde2;
+        --muted: #93707c;
+        --shadow-sm: 0 1px 2px rgba(58, 21, 38, 0.06);
+        --shadow-md: 0 14px 34px -18px rgba(58, 21, 38, 0.3);
       }
       * {
         box-sizing: border-box;
       }
+      html {
+        overflow-x: hidden;
+      }
       body {
         margin: 0;
+        max-width: 100vw;
+        overflow-x: hidden;
         font-family: "Inter", sans-serif;
         background:
           radial-gradient(
             1100px 480px at 100% -8%,
-            #eef0e3 0%,
+            #fbe4ea 0%,
             transparent 62%
           ),
-          radial-gradient(900px 420px at -6% 110%, #f3e9d4 0%, transparent 55%),
+          radial-gradient(900px 420px at -6% 110%, #f6ead2 0%, transparent 55%),
           var(--cream);
         color: var(--ink);
       }
@@ -109,9 +114,16 @@
         border-left: 3px solid transparent;
       }
       .nav-item .ico {
-        font-size: 15px;
         width: 18px;
-        text-align: center;
+        height: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .nav-item .ico svg {
+        width: 16px;
+        height: 16px;
       }
       .nav-item:hover {
         background: rgba(255, 255, 255, 0.07);
@@ -136,6 +148,8 @@
         flex: 1;
         padding: 36px 44px 60px;
         max-width: 1260px;
+        min-width: 0;
+        overflow-x: hidden;
       }
       .topbar {
         display: flex;
@@ -372,7 +386,7 @@
         left: 8px;
         width: 6px;
         height: 7px;
-        background: #cfc2a3;
+        background: var(--gold);
         border-radius: 2px 2px 0 0;
       }
       .bottle-neck {
@@ -475,6 +489,24 @@
       .icon-btn.danger:hover {
         background: var(--terracotta-light);
         border-color: var(--terracotta);
+      }
+      .icon-btn svg {
+        width: 14px;
+        height: 14px;
+        color: var(--ink);
+      }
+      .btn svg,
+      .top-actions .icon-btn svg {
+        width: 15px;
+        height: 15px;
+      }
+      .bnav-ico svg {
+        width: 19px;
+        height: 19px;
+      }
+      .bnav-scan .bnav-ico svg {
+        width: 20px;
+        height: 20px;
       }
 
       /* Modal */
@@ -835,6 +867,15 @@
           justify-content: space-between;
           align-items: center;
           gap: 10px;
+          flex-wrap: wrap;
+          min-width: 0;
+        }
+        .table-wrap td > * {
+          min-width: 0;
+        }
+        .table-wrap .price-input {
+          width: 100px;
+          max-width: 40vw;
         }
         .table-wrap td::before {
           content: attr(data-label);
@@ -952,12 +993,12 @@
           <svg class="brand-mark" viewBox="0 0 24 24" fill="none">
             <path
               d="M12 2C12 2 6 10.5 6 15a6 6 0 0 0 12 0c0-4.5-6-13-6-13Z"
-              fill="#C9A96A"
-              opacity="0.9" />
+              fill="#E8B4C4"
+              opacity="0.95" />
             <path
               d="M12 6.5c0 0-3.2 5.3-3.2 8.2a3.2 3.2 0 0 0 6.4 0c0-2.9-3.2-8.2-3.2-8.2Z"
               fill="#fff"
-              opacity="0.5" />
+              opacity="0.55" />
           </svg>
           <div class="brand">Botanika Lab</div>
         </div>
@@ -966,30 +1007,100 @@
           class="nav-item active"
           data-view="dashboard"
           onclick="switchView('dashboard')">
-          <span class="ico">📊</span>
+          <span class="ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="4" y="10" width="4" height="10" />
+              <rect x="10" y="5" width="4" height="15" />
+              <rect x="16" y="13" width="4" height="7" />
+            </svg>
+          </span>
           Dashboard
         </div>
         <div class="nav-item" data-view="produk" onclick="switchView('produk')">
-          <span class="ico">🧴</span>
+          <span class="ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 3c0 0-6 7.5-6 12a6 6 0 0 0 12 0c0-4.5-6-12-6-12Z" />
+            </svg>
+          </span>
           Produk
         </div>
         <div class="nav-item" onclick="openScanModal()">
-          <span class="ico">📷</span>
+          <span class="ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M4 8a2 2 0 0 1 2-2h1l1.5-2h7L17 6h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+              <circle cx="12" cy="13" r="3.2" />
+            </svg>
+          </span>
           Scan Barcode
         </div>
         <div class="nav-item" data-view="stok" onclick="switchView('stok')">
-          <span class="ico">📦</span>
+          <span class="ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M3.5 7.5 12 3l8.5 4.5V16.5L12 21l-8.5-4.5Z" />
+              <path d="M3.5 7.5 12 12l8.5-4.5" />
+              <path d="M12 12v9" />
+            </svg>
+          </span>
           Stok Masuk
         </div>
         <div class="nav-item" data-view="harga" onclick="switchView('harga')">
-          <span class="ico">🏷️</span>
+          <span class="ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M12.6 3H20v7.4L10.8 19.6a2 2 0 0 1-2.8 0l-4.6-4.6a2 2 0 0 1 0-2.8L12.6 3Z" />
+              <circle cx="16" cy="7" r="1.3" />
+            </svg>
+          </span>
           Daftar Harga
         </div>
         <div
           class="nav-item"
           data-view="pengaturan"
           onclick="switchView('pengaturan')">
-          <span class="ico">⚙️</span>
+          <span class="ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3" />
+              <path
+                d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 0 0-2.1-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2.1 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2.1 1.2L10 21h4l.5-2.6c.8-.3 1.5-.7 2.1-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2Z" />
+            </svg>
+          </span>
           Pengaturan
         </div>
         <div class="sidebar-foot">
@@ -1022,20 +1133,48 @@
               <input id="searchInput" placeholder="Cari produk atau SKU..." />
             </div>
             <button class="btn btn-ghost" onclick="openScanModal()">
-              📷
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                  d="M4 8a2 2 0 0 1 2-2h1l1.5-2h7L17 6h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+                <circle cx="12" cy="13" r="3.2" />
+              </svg>
               <span class="label-full">Scan Barcode</span>
             </button>
             <button
               class="btn btn-primary"
               id="addProdBtn"
               onclick="openModal()">
-              + Tambah Produk
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              Tambah Produk
             </button>
             <div
               class="icon-btn"
               onclick="switchView('pengaturan')"
               title="Pengaturan">
-              ⚙️
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3" />
+                <path
+                  d="M19 12a7 7 0 0 0-.1-1.2l2-1.5-2-3.4-2.3.9a7 7 0 0 0-2.1-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2.1 1.2l-2.3-.9-2 3.4 2 1.5A7 7 0 0 0 5 12c0 .4 0 .8.1 1.2l-2 1.5 2 3.4 2.3-.9c.6.5 1.3.9 2.1 1.2L10 21h4l.5-2.6c.8-.3 1.5-.7 2.1-1.2l2.3.9 2-3.4-2-1.5c.1-.4.1-.8.1-1.2Z" />
+              </svg>
             </div>
           </div>
         </div>
@@ -1183,26 +1322,84 @@
           class="bnav-item active"
           data-view="dashboard"
           onclick="switchView('dashboard')">
-          <span class="bnav-ico">📊</span>
+          <span class="bnav-ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <rect x="4" y="10" width="4" height="10" />
+              <rect x="10" y="5" width="4" height="15" />
+              <rect x="16" y="13" width="4" height="7" />
+            </svg>
+          </span>
           Dashboard
         </div>
         <div
           class="bnav-item"
           data-view="produk"
           onclick="switchView('produk')">
-          <span class="bnav-ico">🧴</span>
+          <span class="bnav-ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M12 3c0 0-6 7.5-6 12a6 6 0 0 0 12 0c0-4.5-6-12-6-12Z" />
+            </svg>
+          </span>
           Produk
         </div>
         <div class="bnav-item bnav-scan" onclick="openScanModal()">
-          <span class="bnav-ico">📷</span>
+          <span class="bnav-ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M4 8a2 2 0 0 1 2-2h1l1.5-2h7L17 6h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z" />
+              <circle cx="12" cy="13" r="3.2" />
+            </svg>
+          </span>
           Scan
         </div>
         <div class="bnav-item" data-view="stok" onclick="switchView('stok')">
-          <span class="bnav-ico">📦</span>
+          <span class="bnav-ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M3.5 7.5 12 3l8.5 4.5V16.5L12 21l-8.5-4.5Z" />
+              <path d="M3.5 7.5 12 12l8.5-4.5" />
+              <path d="M12 12v9" />
+            </svg>
+          </span>
           Stok
         </div>
         <div class="bnav-item" data-view="harga" onclick="switchView('harga')">
-          <span class="bnav-ico">🏷️</span>
+          <span class="bnav-ico">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round">
+              <path
+                d="M12.6 3H20v7.4L10.8 19.6a2 2 0 0 1-2.8 0l-4.6-4.6a2 2 0 0 1 0-2.8L12.6 3Z" />
+              <circle cx="16" cy="7" r="1.3" />
+            </svg>
+          </span>
           Harga
         </div>
       </div>
@@ -1249,12 +1446,12 @@
 
     <script>
       const catColors = {
-        Cleanser: "#8a9a72", // busa pembersih — hijau sage lembut
-        Toner: "#b6874c", // air toner — amber keemasan pucat
-        Serum: "#6b8a6e", // serum dropper — sage dalam
-        Moisturizer: "#c9a96a", // krim pelembap — gading keemasan
-        Sunscreen: "#d3b56a", // sunscreen — kuning gading hangat
-        "Sheet Mask": "#bd6a4a", // essence masker — terracotta lembut
+        Cleanser: "#c9a05c", // busa pembersih — rose-gold hangat
+        Toner: "#e0879f", // air toner — pink muda segar
+        Serum: "#9c2c53", // serum dropper — berry dalam
+        Moisturizer: "#d64d78", // krim pelembap — pink lipstick utama
+        Sunscreen: "#c39a5c", // sunscreen — gold hangat
+        "Sheet Mask": "#b23a4e", // essence masker — merah lipstick
       };
 
       let products = [
@@ -1473,8 +1670,8 @@
         <td data-label="Status"><span class="badge ${st.cls}">${st.label}</span></td>
         <td data-label="">
           <div class="row-actions">
-            <div class="icon-btn" onclick="editProduct(${p.id})" title="Edit">✎</div>
-            <div class="icon-btn danger" onclick="deleteProduct(${p.id})" title="Hapus">🗑</div>
+            <div class="icon-btn" onclick="editProduct(${p.id})" title="Edit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3Z"/><path d="M13.5 7.5l3 3"/></svg></div>
+            <div class="icon-btn danger" onclick="deleteProduct(${p.id})" title="Hapus"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14"/><path d="M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/><path d="M7 7l1 12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2l1-12"/></svg></div>
           </div>
         </td>
       </tr>`;
