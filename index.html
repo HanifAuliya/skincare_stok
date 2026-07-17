@@ -1,0 +1,1703 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Botanika Lab — Manajemen Stok</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #33222a;
+        --cream: #fbf1ee;
+        --panel: #ffffff;
+        --sage: #c24e72;
+        --sage-deep: #7a2e4c;
+        --sage-light: #f7e3ea;
+        --amber: #c6924f;
+        --amber-light: #f6e8d2;
+        --rose: #a73257;
+        --rose-light: #fbe1e6;
+        --line: #eedcde;
+        --muted: #93727b;
+        --shadow-sm: 0 1px 2px rgba(122, 46, 76, 0.05);
+        --shadow-md: 0 10px 30px -14px rgba(122, 46, 76, 0.28);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: "Inter", sans-serif;
+        background:
+          radial-gradient(
+            1200px 500px at 100% -10%,
+            #fbe6ea 0%,
+            transparent 60%
+          ),
+          var(--cream);
+        color: var(--ink);
+      }
+      h1,
+      h2,
+      h3,
+      .display {
+        font-family: "Fraunces", serif;
+        letter-spacing: -0.01em;
+      }
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
+      ::selection {
+        background: var(--sage-light);
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 238px;
+        background: linear-gradient(180deg, var(--sage-deep), #5c2038);
+        color: #fbedef;
+        padding: 30px 20px;
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        position: relative;
+      }
+      .brand-row {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        margin-bottom: 2px;
+      }
+      .brand-mark {
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+      }
+      .brand {
+        font-family: "Fraunces", serif;
+        font-style: italic;
+        font-weight: 600;
+        font-size: 21px;
+        line-height: 1.15;
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #e7afc0;
+        margin: 2px 0 38px 35px;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 10px 13px;
+        border-radius: 9px;
+        font-size: 13.5px;
+        color: #efc9d4;
+        cursor: pointer;
+        margin-bottom: 3px;
+        transition: 0.15s;
+        border-left: 3px solid transparent;
+      }
+      .nav-item .ico {
+        font-size: 15px;
+        width: 18px;
+        text-align: center;
+      }
+      .nav-item:hover {
+        background: rgba(255, 255, 255, 0.07);
+      }
+      .nav-item.active {
+        background: rgba(255, 255, 255, 0.13);
+        color: #fff;
+        font-weight: 600;
+        border-left: 3px solid #f3b6c6;
+      }
+      .sidebar-foot {
+        margin-top: auto;
+        font-size: 11px;
+        color: #d592a4;
+        line-height: 1.6;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      /* Main */
+      .main {
+        flex: 1;
+        padding: 36px 44px 60px;
+        max-width: 1260px;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 30px;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--rose);
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .topbar h1 {
+        font-size: 30px;
+        margin: 0 0 5px;
+        font-weight: 600;
+      }
+      .topbar p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .top-actions {
+        display: flex;
+        gap: 10px;
+      }
+      .search-box {
+        position: relative;
+      }
+      .search-box input {
+        padding: 10px 14px 10px 34px;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        background: var(--panel);
+        font-size: 13px;
+        width: 220px;
+        font-family: "Inter";
+        box-shadow: var(--shadow-sm);
+      }
+      .search-box svg {
+        position: absolute;
+        left: 11px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.5;
+      }
+      .btn {
+        border: none;
+        border-radius: 9px;
+        padding: 10px 18px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: "Inter";
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: 0.15s;
+      }
+      .btn-primary {
+        background: var(--sage);
+        color: #fff;
+        box-shadow: 0 6px 16px -6px rgba(162, 50, 87, 0.55);
+      }
+      .btn-primary:hover {
+        background: var(--sage-deep);
+        transform: translateY(-1px);
+      }
+      .btn-ghost {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        color: var(--ink);
+        box-shadow: var(--shadow-sm);
+      }
+      .btn-ghost:hover {
+        background: var(--sage-light);
+      }
+
+      /* Stats */
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+      .stat-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 19px 20px;
+        box-shadow: var(--shadow-sm);
+        border-left: 3px solid var(--sage);
+        position: relative;
+      }
+      .stat-card.alert {
+        border-left-color: var(--rose);
+      }
+      .stat-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--muted);
+        margin-bottom: 11px;
+      }
+      .stat-value {
+        font-family: "Fraunces", serif;
+        font-size: 27px;
+        font-weight: 600;
+      }
+      .stat-sub {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 5px;
+      }
+      .stat-card.alert .stat-value {
+        color: var(--rose);
+      }
+
+      /* Filters */
+      .filters {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 18px;
+        flex-wrap: wrap;
+      }
+      .chip {
+        padding: 7px 15px;
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        background: var(--panel);
+        font-size: 12.5px;
+        cursor: pointer;
+        color: var(--muted);
+        transition: 0.15s;
+      }
+      .chip:hover {
+        border-color: var(--sage);
+      }
+      .chip.active {
+        background: var(--sage);
+        color: #fff;
+        border-color: var(--sage);
+      }
+
+      /* Table */
+      .table-wrap {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      thead th {
+        text-align: left;
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        padding: 15px 18px;
+        border-bottom: 1px solid var(--line);
+        font-weight: 700;
+        background: #fcf7f5;
+      }
+      tbody td {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+        font-size: 13.5px;
+        vertical-align: middle;
+      }
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr {
+        transition: 0.12s;
+      }
+      tbody tr:hover {
+        background: #fdf7f8;
+      }
+      .prod-name {
+        font-weight: 600;
+      }
+      .prod-sku {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 11px;
+        color: var(--muted);
+      }
+      .swatch {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 7px;
+        flex-shrink: 0;
+      }
+      .cell-block {
+        min-width: 0;
+      }
+      .cat-cell {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      /* Stock tube visual — signature element, styled like a squeeze tube */
+      .stock-cell {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+      }
+      .tube {
+        width: 20px;
+        height: 36px;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .tube-cap {
+        position: absolute;
+        top: -3px;
+        left: 5px;
+        width: 10px;
+        height: 6px;
+        background: #d9c7ca;
+        border-radius: 2px 2px 0 0;
+      }
+      .tube-body {
+        position: absolute;
+        top: 3px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 5px 5px 9px 9px;
+        border: 1.5px solid var(--line);
+        background: #fff;
+        overflow: hidden;
+      }
+      .tube-fill {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transition: height 0.3s;
+      }
+      .stock-num {
+        font-variant-numeric: tabular-nums;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      .stock-unit {
+        color: var(--muted);
+        font-size: 11.5px;
+      }
+
+      .price-input {
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 7px;
+        padding: 6px 9px;
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 13px;
+        width: 112px;
+      }
+      .price-input:focus {
+        outline: 2px solid var(--sage);
+        outline-offset: 1px;
+      }
+
+      .badge {
+        font-size: 10.5px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .badge-ok {
+        background: var(--sage-light);
+        color: var(--sage-deep);
+      }
+      .badge-low {
+        background: var(--amber-light);
+        color: #8a5a20;
+      }
+      .badge-out {
+        background: var(--rose-light);
+        color: #8a2a47;
+      }
+
+      .row-actions {
+        display: flex;
+        gap: 6px;
+      }
+      .icon-btn {
+        width: 29px;
+        height: 29px;
+        border-radius: 7px;
+        border: 1px solid var(--line);
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.12s;
+      }
+      .icon-btn:hover {
+        background: var(--sage-light);
+        border-color: var(--sage);
+      }
+      .icon-btn.danger:hover {
+        background: var(--rose-light);
+        border-color: var(--rose);
+      }
+
+      /* Modal */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(51, 34, 42, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 120;
+        backdrop-filter: blur(1px);
+      }
+      .overlay.show {
+        display: flex;
+      }
+      .modal {
+        background: var(--panel);
+        border-radius: 18px;
+        padding: 28px;
+        width: 420px;
+        max-width: 90vw;
+        border: 1px solid var(--line);
+        box-shadow: 0 30px 60px -20px rgba(51, 34, 42, 0.35);
+      }
+      .modal h2 {
+        margin: 0 0 18px;
+        font-size: 20px;
+      }
+      .field {
+        margin-bottom: 14px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+      .field input,
+      .field select {
+        width: 100%;
+        padding: 9px 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font-size: 13.5px;
+        font-family: "Inter";
+        background: #fff;
+      }
+      .field input:focus,
+      .field select:focus {
+        outline: 2px solid var(--sage);
+        outline-offset: 1px;
+      }
+      .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 20px;
+      }
+      .empty {
+        padding: 60px 20px;
+        text-align: center;
+        color: var(--muted);
+      }
+      .empty .display {
+        font-size: 20px;
+        color: var(--ink);
+        margin-bottom: 6px;
+      }
+
+      /* Scan barcode modal */
+      .scan-modal {
+        width: 380px;
+      }
+      .viewfinder {
+        position: relative;
+        background: #2c1620;
+        border-radius: 14px;
+        height: 190px;
+        overflow: hidden;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .viewfinder::before {
+        content: "";
+        position: absolute;
+        inset: 14px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 8px;
+      }
+      .viewfinder .corner {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        border-color: var(--sage);
+      }
+      .c-tl {
+        top: 10px;
+        left: 10px;
+        border-top: 3px solid #f0a6bb;
+        border-left: 3px solid #f0a6bb;
+      }
+      .c-tr {
+        top: 10px;
+        right: 10px;
+        border-top: 3px solid #f0a6bb;
+        border-right: 3px solid #f0a6bb;
+      }
+      .c-bl {
+        bottom: 10px;
+        left: 10px;
+        border-bottom: 3px solid #f0a6bb;
+        border-left: 3px solid #f0a6bb;
+      }
+      .c-br {
+        bottom: 10px;
+        right: 10px;
+        border-bottom: 3px solid #f0a6bb;
+        border-right: 3px solid #f0a6bb;
+      }
+      .scan-line {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        height: 2px;
+        background: #f0a6bb;
+        box-shadow: 0 0 10px #f0a6bb;
+        animation: scanmove 1.8s ease-in-out infinite;
+      }
+      @keyframes scanmove {
+        0% {
+          top: 20px;
+        }
+        50% {
+          top: 160px;
+        }
+        100% {
+          top: 20px;
+        }
+      }
+      .scan-hint {
+        color: #f3d3dc;
+        font-size: 11.5px;
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        z-index: 2;
+      }
+      .scan-result {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 14px;
+        margin-top: 4px;
+        background: var(--sage-light);
+      }
+      .scan-result.not-found {
+        background: var(--rose-light);
+      }
+      .scan-result .prod-name {
+        font-size: 14px;
+      }
+      .scan-adjust {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .qty-btn {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        background: #fff;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .qty-btn:hover {
+        background: var(--sage-light);
+      }
+
+      @media (max-width: 900px) {
+        .sidebar {
+          display: none;
+        }
+        .main {
+          padding: 20px 18px 100px;
+        }
+        .stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .sidebar-backdrop {
+        display: none;
+      }
+
+      /* Bottom navigation — mobile app style */
+      .bottom-nav {
+        display: none;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 80;
+        background: var(--panel);
+        border-top: 1px solid var(--line);
+        box-shadow: 0 -10px 30px -12px rgba(51, 34, 42, 0.22);
+        padding: 9px 6px calc(9px + env(safe-area-inset-bottom));
+      }
+      .bottom-nav-inner {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        max-width: 520px;
+        margin: 0 auto;
+      }
+      .bnav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        flex: 1;
+        padding: 4px 2px;
+      }
+      .bnav-item .bnav-ico {
+        font-size: 18px;
+        line-height: 1;
+      }
+      .bnav-item.active {
+        color: var(--sage);
+      }
+      .bnav-scan {
+        margin-top: -24px;
+      }
+      .bnav-scan .bnav-ico {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: linear-gradient(160deg, var(--sage), var(--sage-deep));
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        box-shadow: 0 10px 22px -6px rgba(167, 50, 87, 0.55);
+        border: 3px solid var(--cream);
+      }
+      .bnav-scan {
+        color: var(--sage-deep);
+      }
+
+      @media (max-width: 900px) {
+        .bottom-nav {
+          display: block;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .topbar {
+          margin-bottom: 22px;
+        }
+        .top-actions {
+          width: 100%;
+          flex-direction: column;
+        }
+        .search-box {
+          width: 100%;
+        }
+        .search-box input {
+          width: 100%;
+        }
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+        .top-actions .icon-btn {
+          align-self: center;
+          width: 44px;
+          height: 44px;
+          font-size: 16px;
+        }
+        .stats {
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+        .stat-value {
+          font-size: 22px;
+        }
+        .stok-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Responsive table -> stacked cards */
+      @media (max-width: 760px) {
+        .table-wrap table,
+        .table-wrap thead,
+        .table-wrap tbody,
+        .table-wrap tr,
+        .table-wrap td {
+          display: block;
+          width: 100%;
+        }
+        .table-wrap thead {
+          display: none;
+        }
+        .table-wrap tbody tr {
+          border: 1px solid var(--line);
+          border-radius: 14px;
+          margin: 12px;
+          padding: 6px 0;
+          box-shadow: var(--shadow-sm);
+        }
+        .table-wrap {
+          padding: 2px;
+        }
+        .table-wrap td {
+          border: none;
+          padding: 9px 16px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 10px;
+        }
+        .table-wrap td::before {
+          content: attr(data-label);
+          font-size: 10.5px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: var(--muted);
+          font-weight: 700;
+          flex-shrink: 0;
+        }
+        .table-wrap td:empty {
+          display: none;
+        }
+        .row-actions {
+          justify-content: flex-end;
+          width: 100%;
+        }
+      }
+
+      /* View switching */
+      .view {
+        display: none;
+      }
+      .view.active {
+        display: block;
+      }
+
+      /* Stok Masuk */
+      .stok-layout {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 20px;
+        align-items: start;
+      }
+      .stok-form {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 22px;
+        box-shadow: var(--shadow-sm);
+      }
+      .stok-form h3 {
+        margin: 0 0 16px;
+        font-size: 16px;
+      }
+      .log-list {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 6px 0;
+        box-shadow: var(--shadow-sm);
+      }
+      .log-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 13px 20px;
+        border-bottom: 1px solid var(--line);
+        font-size: 13.5px;
+      }
+      .log-item:last-child {
+        border-bottom: none;
+      }
+      .log-time {
+        color: var(--muted);
+        font-size: 11.5px;
+      }
+      .log-empty {
+        padding: 40px 20px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13.5px;
+      }
+
+      /* Pengaturan */
+      .settings-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 26px;
+        max-width: 460px;
+        box-shadow: var(--shadow-sm);
+      }
+      .settings-card .field:last-child {
+        margin-bottom: 0;
+      }
+      .settings-note {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      /* Daftar Harga */
+      .harga-note {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <div class="sidebar" id="sidebar">
+        <div class="brand-row">
+          <svg class="brand-mark" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M12 2C12 2 6 10.5 6 15a6 6 0 0 0 12 0c0-4.5-6-13-6-13Z"
+              fill="#F3B6C6"
+              opacity="0.9" />
+            <path
+              d="M12 6.5c0 0-3.2 5.3-3.2 8.2a3.2 3.2 0 0 0 6.4 0c0-2.9-3.2-8.2-3.2-8.2Z"
+              fill="#fff"
+              opacity="0.5" />
+          </svg>
+          <div class="brand">Botanika Lab</div>
+        </div>
+        <div class="brand-sub">Inventaris &amp; Harga</div>
+        <div
+          class="nav-item active"
+          data-view="dashboard"
+          onclick="switchView('dashboard')">
+          <span class="ico">📊</span>
+          Dashboard
+        </div>
+        <div class="nav-item" data-view="produk" onclick="switchView('produk')">
+          <span class="ico">🧴</span>
+          Produk
+        </div>
+        <div class="nav-item" onclick="openScanModal()">
+          <span class="ico">📷</span>
+          Scan Barcode
+        </div>
+        <div class="nav-item" data-view="stok" onclick="switchView('stok')">
+          <span class="ico">📦</span>
+          Stok Masuk
+        </div>
+        <div class="nav-item" data-view="harga" onclick="switchView('harga')">
+          <span class="ico">🏷️</span>
+          Daftar Harga
+        </div>
+        <div
+          class="nav-item"
+          data-view="pengaturan"
+          onclick="switchView('pengaturan')">
+          <span class="ico">⚙️</span>
+          Pengaturan
+        </div>
+        <div class="sidebar-foot">
+          Contoh tampilan demo.
+          <br />
+          Data di bawah ini hanya ilustrasi — siap disesuaikan dengan katalog
+          produk klien.
+        </div>
+      </div>
+
+      <div class="main">
+        <div class="topbar">
+          <div>
+            <div class="eyebrow">Botanika Lab · Panel Internal</div>
+            <h1 id="pageTitle">Stok &amp; Harga Produk</h1>
+            <p id="dateLabel">Ringkasan inventaris skincare hari ini</p>
+          </div>
+          <div class="top-actions">
+            <div class="search-box" id="searchBoxWrap">
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2">
+                <circle cx="11" cy="11" r="7" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+              </svg>
+              <input id="searchInput" placeholder="Cari produk atau SKU..." />
+            </div>
+            <button class="btn btn-ghost" onclick="openScanModal()">
+              📷 Scan Barcode
+            </button>
+            <button
+              class="btn btn-primary"
+              id="addProdBtn"
+              onclick="openModal()">
+              + Tambah Produk
+            </button>
+            <div
+              class="icon-btn"
+              onclick="switchView('pengaturan')"
+              title="Pengaturan">
+              ⚙️
+            </div>
+          </div>
+        </div>
+
+        <div id="view-dashboard" class="view active">
+          <div class="stats">
+            <div class="stat-card">
+              <div class="stat-label">Total Produk</div>
+              <div class="stat-value" id="statTotal">0</div>
+              <div class="stat-sub">SKU aktif dalam katalog</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Nilai Stok</div>
+              <div class="stat-value" id="statValue">Rp 0</div>
+              <div class="stat-sub">Estimasi harga jual × stok</div>
+            </div>
+            <div class="stat-card alert">
+              <div class="stat-label">Stok Menipis</div>
+              <div class="stat-value" id="statLow">0</div>
+              <div class="stat-sub">Perlu segera direstok</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-label">Kategori Terlaris</div>
+              <div class="stat-value" id="statTopCat">—</div>
+              <div class="stat-sub">Berdasarkan jumlah SKU</div>
+            </div>
+          </div>
+          <div class="log-list" id="lowStockList"></div>
+        </div>
+
+        <div id="view-produk" class="view">
+          <div class="filters" id="filterChips"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Produk</th>
+                  <th>Kategori</th>
+                  <th>Stok</th>
+                  <th>Harga Jual</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+            <div class="empty" id="emptyState" style="display: none">
+              <div class="display">Belum ada produk yang cocok</div>
+              <div>Coba ubah kata kunci pencarian atau filter kategori.</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="view-stok" class="view">
+          <div class="stok-layout">
+            <div class="stok-form">
+              <h3>Catat Stok Masuk</h3>
+              <div class="field">
+                <label>Pilih Produk</label>
+                <select id="stokProduct"></select>
+              </div>
+              <div class="field">
+                <label>Jumlah Masuk</label>
+                <input
+                  id="stokQty"
+                  type="number"
+                  min="1"
+                  placeholder="cth. 24" />
+              </div>
+              <div class="field">
+                <label>Catatan (opsional)</label>
+                <input
+                  id="stokNote"
+                  placeholder="cth. Kiriman supplier Batch #12" />
+              </div>
+              <button
+                class="btn btn-primary"
+                style="width: 100%; justify-content: center"
+                onclick="submitStokMasuk()">
+                Tambahkan ke Stok
+              </button>
+            </div>
+            <div class="log-list" id="stokLogList"></div>
+          </div>
+        </div>
+
+        <div id="view-harga" class="view">
+          <div class="harga-note">
+            Ubah harga jual langsung di kolom, perubahan otomatis tersimpan ke
+            katalog produk.
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Produk</th>
+                  <th>Kategori</th>
+                  <th>SKU</th>
+                  <th>Harga Jual</th>
+                </tr>
+              </thead>
+              <tbody id="priceTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="view-pengaturan" class="view">
+          <div class="settings-card">
+            <div class="field">
+              <label>Nama Toko / Brand</label>
+              <input id="setStoreName" value="Botanika Lab" />
+            </div>
+            <div class="field">
+              <label>Ambang Batas Stok Menipis (%)</label>
+              <input
+                id="setThreshold"
+                type="number"
+                min="1"
+                max="100"
+                value="20" />
+              <div class="settings-note">
+                Produk ditandai "Menipis" jika stok tersisa berada di bawah
+                persentase ini dari stok maksimum.
+              </div>
+            </div>
+            <div class="field">
+              <label>Mata Uang</label>
+              <select id="setCurrency">
+                <option value="Rp">Rupiah (Rp)</option>
+                <option value="RM">Ringgit (RM)</option>
+                <option value="$">Dolar ($)</option>
+              </select>
+            </div>
+            <button class="btn btn-primary" onclick="saveSettings()">
+              Simpan Pengaturan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-nav">
+      <div class="bottom-nav-inner">
+        <div
+          class="bnav-item active"
+          data-view="dashboard"
+          onclick="switchView('dashboard')">
+          <span class="bnav-ico">📊</span>
+          Dashboard
+        </div>
+        <div
+          class="bnav-item"
+          data-view="produk"
+          onclick="switchView('produk')">
+          <span class="bnav-ico">🧴</span>
+          Produk
+        </div>
+        <div class="bnav-item bnav-scan" onclick="openScanModal()">
+          <span class="bnav-ico">📷</span>
+          Scan
+        </div>
+        <div class="bnav-item" data-view="stok" onclick="switchView('stok')">
+          <span class="bnav-ico">📦</span>
+          Stok
+        </div>
+        <div class="bnav-item" data-view="harga" onclick="switchView('harga')">
+          <span class="bnav-ico">🏷️</span>
+          Harga
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="overlay">
+      <div class="modal">
+        <h2 id="modalTitle">Tambah Produk</h2>
+        <div class="field">
+          <label>Nama Produk</label>
+          <input id="fName" placeholder="cth. Centella Calming Serum" />
+        </div>
+        <div class="field">
+          <label>SKU</label>
+          <input id="fSku" placeholder="cth. BTL-SER-004" />
+        </div>
+        <div class="field">
+          <label>Kategori</label>
+          <select id="fCategory">
+            <option>Cleanser</option>
+            <option>Toner</option>
+            <option>Serum</option>
+            <option>Moisturizer</option>
+            <option>Sunscreen</option>
+            <option>Sheet Mask</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Jumlah Stok</label>
+          <input id="fStock" type="number" min="0" placeholder="0" />
+        </div>
+        <div class="field">
+          <label>Harga Jual (Rp)</label>
+          <input id="fPrice" type="number" min="0" placeholder="0" />
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeModal()">Batal</button>
+          <button class="btn btn-primary" onclick="saveProduct()">
+            Simpan Produk
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const catColors = {
+        Cleanser: "#C9A87C", // busa pembersih — krem kecoklatan
+        Toner: "#E3B6C4", // air toner — pink bening lembut
+        Serum: "#C68A3D", // serum dropper — amber keemasan
+        Moisturizer: "#E4C6A6", // krim pelembap — krem gading
+        Sunscreen: "#DCC15A", // sunscreen — putih kekuningan
+        "Sheet Mask": "#DD7E9B", // essence masker — pink segar
+      };
+
+      let products = [
+        {
+          id: 1,
+          name: "Centella Calming Serum",
+          sku: "BTL-SER-001",
+          cat: "Serum",
+          stock: 8,
+          maxStock: 60,
+          price: 129000,
+        },
+        {
+          id: 2,
+          name: "Rice Bran Gentle Cleanser",
+          sku: "BTL-CLN-002",
+          cat: "Cleanser",
+          stock: 42,
+          maxStock: 80,
+          price: 89000,
+        },
+        {
+          id: 3,
+          name: "Hyaluronic Hydra Toner",
+          sku: "BTL-TON-003",
+          cat: "Toner",
+          stock: 0,
+          maxStock: 50,
+          price: 95000,
+        },
+        {
+          id: 4,
+          name: "Niacinamide Barrier Cream",
+          sku: "BTL-MST-004",
+          cat: "Moisturizer",
+          stock: 27,
+          maxStock: 50,
+          price: 145000,
+        },
+        {
+          id: 5,
+          name: "Mineral Sunshield SPF50",
+          sku: "BTL-SUN-005",
+          cat: "Sunscreen",
+          stock: 5,
+          maxStock: 40,
+          price: 119000,
+        },
+        {
+          id: 6,
+          name: "Tea Tree Purifying Cleanser",
+          sku: "BTL-CLN-006",
+          cat: "Cleanser",
+          stock: 33,
+          maxStock: 80,
+          price: 79000,
+        },
+        {
+          id: 7,
+          name: "Ginseng Radiance Serum",
+          sku: "BTL-SER-007",
+          cat: "Serum",
+          stock: 15,
+          maxStock: 60,
+          price: 159000,
+        },
+        {
+          id: 8,
+          name: "Snail Mucin Repair Sheet Mask",
+          sku: "BTL-MSK-008",
+          cat: "Sheet Mask",
+          stock: 60,
+          maxStock: 100,
+          price: 15000,
+        },
+        {
+          id: 9,
+          name: "Green Tea Balancing Toner",
+          sku: "BTL-TON-009",
+          cat: "Toner",
+          stock: 2,
+          maxStock: 50,
+          price: 99000,
+        },
+      ];
+
+      let activeFilter = "Semua";
+      let editingId = null;
+      let lowStockThreshold = 0.2;
+      let currency = "Rp";
+      let stokLog = [];
+
+      const viewMeta = {
+        dashboard: {
+          title: "Stok & Harga Produk",
+          sub: "Ringkasan inventaris skincare hari ini",
+        },
+        produk: {
+          title: "Katalog Produk",
+          sub: "Kelola daftar produk, stok, dan harga",
+        },
+        stok: {
+          title: "Stok Masuk",
+          sub: "Catat penerimaan barang dari supplier",
+        },
+        harga: {
+          title: "Daftar Harga",
+          sub: "Lihat dan ubah harga jual seluruh produk",
+        },
+        pengaturan: { title: "Pengaturan", sub: "Preferensi umum toko" },
+      };
+
+      function switchView(view) {
+        document
+          .querySelectorAll(".view")
+          .forEach((v) => v.classList.remove("active"));
+        document.getElementById("view-" + view).classList.add("active");
+        document
+          .querySelectorAll(".nav-item[data-view]")
+          .forEach((n) =>
+            n.classList.toggle("active", n.dataset.view === view),
+          );
+        document
+          .querySelectorAll(".bnav-item[data-view]")
+          .forEach((n) =>
+            n.classList.toggle("active", n.dataset.view === view),
+          );
+
+        const meta = viewMeta[view];
+        document.getElementById("pageTitle").textContent = meta.title;
+        const todayStr = new Date().toLocaleDateString("id-ID", {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+        document.getElementById("dateLabel").textContent =
+          view === "dashboard" ? meta.sub + " — " + todayStr : meta.sub;
+
+        const showTopExtras = view === "produk" || view === "dashboard";
+        document.getElementById("searchBoxWrap").style.display =
+          view === "produk" ? "block" : "none";
+        document.getElementById("addProdBtn").style.display =
+          view === "produk" ? "inline-flex" : "none";
+
+        if (view === "stok") populateStokSelect();
+        if (view === "harga") renderPriceTable();
+        render();
+      }
+
+      function formatRp(n) {
+        return currency + " " + n.toLocaleString("id-ID");
+      }
+
+      function statusOf(p) {
+        if (p.stock === 0) return { label: "Habis", cls: "badge-out" };
+        if (p.stock <= p.maxStock * lowStockThreshold)
+          return { label: "Menipis", cls: "badge-low" };
+        return { label: "Tersedia", cls: "badge-ok" };
+      }
+
+      function renderFilters() {
+        const cats = ["Semua", ...new Set(products.map((p) => p.cat))];
+        document.getElementById("filterChips").innerHTML = cats
+          .map(
+            (c) =>
+              `<div class="chip ${c === activeFilter ? "active" : ""}" onclick="setFilter('${c}')">${c}</div>`,
+          )
+          .join("");
+      }
+      function setFilter(c) {
+        activeFilter = c;
+        render();
+      }
+
+      function render() {
+        renderFilters();
+        const q = document.getElementById("searchInput").value.toLowerCase();
+        let list = products.filter(
+          (p) =>
+            (activeFilter === "Semua" || p.cat === activeFilter) &&
+            (p.name.toLowerCase().includes(q) ||
+              p.sku.toLowerCase().includes(q)),
+        );
+
+        const body = document.getElementById("tableBody");
+        const empty = document.getElementById("emptyState");
+        if (list.length === 0) {
+          body.innerHTML = "";
+          empty.style.display = "block";
+        } else {
+          empty.style.display = "none";
+          body.innerHTML = list
+            .map((p) => {
+              const st = statusOf(p);
+              const pct = Math.min(
+                100,
+                Math.round((p.stock / p.maxStock) * 100),
+              );
+              const color = catColors[p.cat] || "#888";
+              return `
+      <tr>
+        <td data-label="Produk">
+          <div class="cell-block">
+            <div class="prod-name">${p.name}</div>
+            <div class="prod-sku">${p.sku}</div>
+          </div>
+        </td>
+        <td data-label="Kategori"><span class="cat-cell"><span class="swatch" style="background:${color}"></span>${p.cat}</span></td>
+        <td data-label="Stok">
+          <div class="stock-cell">
+            <div class="tube"><div class="tube-cap"></div><div class="tube-body"><div class="tube-fill" style="height:${pct}%;background:${color}"></div></div></div>
+            <div><span class="stock-num">${p.stock}</span> <span class="stock-unit">unit</span></div>
+          </div>
+        </td>
+        <td data-label="Harga Jual"><input class="price-input" value="${p.price}" onchange="updatePrice(${p.id}, this.value)"></td>
+        <td data-label="Status"><span class="badge ${st.cls}">${st.label}</span></td>
+        <td data-label="">
+          <div class="row-actions">
+            <div class="icon-btn" onclick="editProduct(${p.id})" title="Edit">✎</div>
+            <div class="icon-btn danger" onclick="deleteProduct(${p.id})" title="Hapus">🗑</div>
+          </div>
+        </td>
+      </tr>`;
+            })
+            .join("");
+        }
+
+        // stats
+        document.getElementById("statTotal").textContent = products.length;
+        const totalValue = products.reduce(
+          (sum, p) => sum + p.stock * p.price,
+          0,
+        );
+        document.getElementById("statValue").textContent = formatRp(totalValue);
+        const lowItems = products.filter(
+          (p) => p.stock <= p.maxStock * lowStockThreshold,
+        );
+        document.getElementById("statLow").textContent = lowItems.length;
+        const catCount = {};
+        products.forEach((p) => (catCount[p.cat] = (catCount[p.cat] || 0) + 1));
+        const topCat = Object.entries(catCount).sort((a, b) => b[1] - a[1])[0];
+        document.getElementById("statTopCat").textContent = topCat
+          ? topCat[0]
+          : "—";
+
+        const lowList = document.getElementById("lowStockList");
+        if (lowList) {
+          if (lowItems.length === 0) {
+            lowList.innerHTML =
+              '<div class="log-empty">Semua produk dalam stok aman. Tidak ada yang perlu direstok saat ini.</div>';
+          } else {
+            lowList.innerHTML = lowItems
+              .map((p) => {
+                const st = statusOf(p);
+                const color = catColors[p.cat] || "#888";
+                return `<div class="log-item">
+          <div><span class="swatch" style="background:${color}"></span><span class="prod-name">${p.name}</span> <span class="prod-sku">${p.sku}</span></div>
+          <div><span class="badge ${st.cls}">${st.label}</span> &nbsp; <span class="stock-num">${p.stock}</span> <span class="stock-unit">unit</span></div>
+        </div>`;
+              })
+              .join("");
+          }
+        }
+      }
+
+      function populateStokSelect() {
+        const sel = document.getElementById("stokProduct");
+        sel.innerHTML = products
+          .map((p) => `<option value="${p.id}">${p.name} (${p.sku})</option>`)
+          .join("");
+      }
+
+      function submitStokMasuk() {
+        const id = Number(document.getElementById("stokProduct").value);
+        const qty = Number(document.getElementById("stokQty").value);
+        const note = document.getElementById("stokNote").value.trim();
+        if (!qty || qty <= 0) {
+          alert("Masukkan jumlah stok masuk yang valid.");
+          return;
+        }
+        const p = products.find((p) => p.id === id);
+        if (!p) return;
+        p.stock += qty;
+        stokLog.unshift({
+          name: p.name,
+          sku: p.sku,
+          qty,
+          note,
+          time: new Date(),
+        });
+        document.getElementById("stokQty").value = "";
+        document.getElementById("stokNote").value = "";
+        renderStokLog();
+        render();
+      }
+
+      function renderStokLog() {
+        const list = document.getElementById("stokLogList");
+        if (stokLog.length === 0) {
+          list.innerHTML =
+            '<div class="log-empty">Belum ada riwayat stok masuk pada sesi demo ini.</div>';
+          return;
+        }
+        list.innerHTML = stokLog
+          .map(
+            (l) => `
+    <div class="log-item">
+      <div><span class="prod-name">${l.name}</span> <span class="prod-sku">${l.sku}</span>${l.note ? " · " + l.note : ""}</div>
+      <div>+${l.qty} unit <span class="log-time">${l.time.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })}</span></div>
+    </div>`,
+          )
+          .join("");
+      }
+
+      function renderPriceTable() {
+        const body = document.getElementById("priceTableBody");
+        body.innerHTML = products
+          .map((p) => {
+            const color = catColors[p.cat] || "#888";
+            return `<tr>
+      <td data-label="Produk"><div class="prod-name">${p.name}</div></td>
+      <td data-label="Kategori"><span class="cat-cell"><span class="swatch" style="background:${color}"></span>${p.cat}</span></td>
+      <td data-label="SKU"><span class="prod-sku">${p.sku}</span></td>
+      <td data-label="Harga Jual"><input class="price-input" value="${p.price}" onchange="updatePrice(${p.id}, this.value)"></td>
+    </tr>`;
+          })
+          .join("");
+      }
+
+      function saveSettings() {
+        const pct = Number(document.getElementById("setThreshold").value) || 20;
+        lowStockThreshold = pct / 100;
+        currency = document.getElementById("setCurrency").value;
+        const storeName =
+          document.getElementById("setStoreName").value.trim() ||
+          "Botanika Lab";
+        document.querySelector(".brand").textContent = storeName;
+        render();
+        alert("Pengaturan tersimpan.");
+      }
+
+      function updatePrice(id, val) {
+        const p = products.find((p) => p.id === id);
+        if (p) {
+          p.price = Number(val) || 0;
+          render();
+          if (document.getElementById("priceTableBody")) renderPriceTable();
+        }
+      }
+
+      function openModal() {
+        editingId = null;
+        document.getElementById("modalTitle").textContent = "Tambah Produk";
+        document.getElementById("fName").value = "";
+        document.getElementById("fSku").value = "";
+        document.getElementById("fCategory").value = "Serum";
+        document.getElementById("fStock").value = "";
+        document.getElementById("fPrice").value = "";
+        document.getElementById("overlay").classList.add("show");
+      }
+      function closeModal() {
+        document.getElementById("overlay").classList.remove("show");
+      }
+
+      function editProduct(id) {
+        const p = products.find((p) => p.id === id);
+        if (!p) return;
+        editingId = id;
+        document.getElementById("modalTitle").textContent = "Edit Produk";
+        document.getElementById("fName").value = p.name;
+        document.getElementById("fSku").value = p.sku;
+        document.getElementById("fCategory").value = p.cat;
+        document.getElementById("fStock").value = p.stock;
+        document.getElementById("fPrice").value = p.price;
+        document.getElementById("overlay").classList.add("show");
+      }
+
+      function saveProduct() {
+        const name = document.getElementById("fName").value.trim();
+        const sku = document.getElementById("fSku").value.trim();
+        const cat = document.getElementById("fCategory").value;
+        const stock = Number(document.getElementById("fStock").value) || 0;
+        const price = Number(document.getElementById("fPrice").value) || 0;
+        if (!name || !sku) {
+          alert("Nama produk dan SKU wajib diisi.");
+          return;
+        }
+
+        if (editingId) {
+          const p = products.find((p) => p.id === editingId);
+          Object.assign(p, { name, sku, cat, stock, price });
+        } else {
+          products.push({
+            id: Date.now(),
+            name,
+            sku,
+            cat,
+            stock,
+            maxStock: Math.max(stock * 2, 50),
+            price,
+          });
+        }
+        closeModal();
+        render();
+      }
+
+      function deleteProduct(id) {
+        if (confirm("Hapus produk ini dari katalog?")) {
+          products = products.filter((p) => p.id !== id);
+          render();
+        }
+      }
+
+      document.getElementById("searchInput").addEventListener("input", render);
+
+      renderStokLog();
+      switchView("dashboard");
+    </script>
+    <div class="overlay" id="scanOverlay">
+      <div class="modal scan-modal">
+        <h2>Scan Barcode Produk</h2>
+        <div class="viewfinder">
+          <div class="corner c-tl"></div>
+          <div class="corner c-tr"></div>
+          <div class="corner c-bl"></div>
+          <div class="corner c-br"></div>
+          <div class="scan-line"></div>
+          <div class="scan-hint">Arahkan kamera ke barcode kemasan</div>
+        </div>
+        <div class="field">
+          <label>Atau masukkan kode SKU manual</label>
+          <input
+            id="scanInput"
+            placeholder="cth. BTL-SER-001"
+            onkeydown="if (event.key === 'Enter') doScan();" />
+        </div>
+        <button
+          class="btn btn-primary"
+          style="width: 100%; justify-content: center"
+          onclick="doScan()">
+          Simulasikan Scan
+        </button>
+        <div id="scanResult"></div>
+        <div class="modal-actions">
+          <button class="btn btn-ghost" onclick="closeScanModal()">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function openScanModal() {
+        document.getElementById("scanInput").value = "";
+        document.getElementById("scanResult").innerHTML = "";
+        document.getElementById("scanOverlay").classList.add("show");
+      }
+      function closeScanModal() {
+        document.getElementById("scanOverlay").classList.remove("show");
+      }
+
+      function doScan() {
+        let code = document.getElementById("scanInput").value.trim();
+        // Jika kosong, simulasikan hasil scan acak dari katalog (demo kamera)
+        if (!code) {
+          const random = products[Math.floor(Math.random() * products.length)];
+          code = random.sku;
+          document.getElementById("scanInput").value = code;
+        }
+        const p = products.find(
+          (p) => p.sku.toLowerCase() === code.toLowerCase(),
+        );
+        const box = document.getElementById("scanResult");
+        if (!p) {
+          box.innerHTML = `<div class="scan-result not-found">
+      <div class="prod-name">Produk tidak ditemukan</div>
+      <div class="prod-sku">Kode "${code}" belum terdaftar di katalog.</div>
+    </div>`;
+          return;
+        }
+        renderScanResult(p);
+      }
+
+      function renderScanResult(p) {
+        const color = catColors[p.cat] || "#888";
+        const box = document.getElementById("scanResult");
+        box.innerHTML = `<div class="scan-result">
+    <span class="swatch" style="background:${color}"></span>
+    <span class="prod-name">${p.name}</span>
+    <div class="prod-sku">${p.sku} · ${p.cat}</div>
+    <div style="margin-top:8px;font-size:13px;">Harga: <strong>${formatRp(p.price)}</strong></div>
+    <div class="scan-adjust">
+      <div class="qty-btn" onclick="adjustScanStock(${p.id},-1)">−</div>
+      <div><span class="stock-num" id="scanQty">${p.stock}</span> <span class="stock-unit">unit di stok</span></div>
+      <div class="qty-btn" onclick="adjustScanStock(${p.id},1)">+</div>
+    </div>
+  </div>`;
+      }
+
+      function adjustScanStock(id, delta) {
+        const p = products.find((p) => p.id === id);
+        if (!p) return;
+        p.stock = Math.max(0, p.stock + delta);
+        document.getElementById("scanQty").textContent = p.stock;
+        render();
+      }
+    </script>
+  </body>
+</html>
